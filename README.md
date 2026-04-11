@@ -55,8 +55,44 @@ There are a few steps to follow:
 
 The project is built using CMake (kudos to [@EviSijben](https://github.com/EviSijben)). Run `make` (or `make debug` for a debug build). To test that everything works fine, run `python3 examples/python/test.py`. You can use Ninja to speed up builds, by prefixing the make command with `GEN=ninja` (e.g. `GEN=ninja make release`).
 
-### Conda
-To install using [conda](https://www.anaconda.com/), run:
+### Conda (无需 sudo)
+使用 [Miniforge](https://github.com/conda-forge/miniforge) 在用户空间安装，无需 root 权限：
+```bash
+# 1. 安装 Miniforge（如果还没有 conda）
+curl -L -o /tmp/Miniforge3-Linux-x86_64.sh https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
+bash /tmp/Miniforge3-Linux-x86_64.sh -b -p $HOME/miniforge3
+
+# 2. 创建环境并安装 C++ 依赖
+$HOME/miniforge3/bin/conda create -n gpgomea python=3.10 -y
+$HOME/miniforge3/bin/conda install -n gpgomea -c conda-forge armadillo boost numpy\<2 scikit-learn sympy -y
+
+# 3. 激活环境
+eval "$($HOME/miniforge3/bin/conda shell.bash hook)"
+conda activate gpgomea
+
+# 4. CMake 编译（指向 conda 环境）
+mkdir -p build/release && cd build/release
+cmake \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DENABLE_SANITIZER=FALSE -DENABLE_UBSAN=0 \
+  -DPYTHON_EXECUTABLE=$CONDA_PREFIX/bin/python \
+  -DPYTHON_INCLUDE_DIR=$CONDA_PREFIX/include/python3.10 \
+  -DPYTHON_LIBRARY=$CONDA_PREFIX/lib/libpython3.10.so \
+  -DARMADILLO_INCLUDE_DIR=$CONDA_PREFIX/include \
+  -DARMADILLO_LIBRARY=$CONDA_PREFIX/lib/libarmadillo.so \
+  -DBOOST_ROOT=$CONDA_PREFIX -DBoost_NO_SYSTEM_PATHS=ON \
+  ../.. && cmake --build .
+
+# 5. 安装 Python 包
+cp src/libgpgomea_python.so ../../pythonpkg/pyGPGOMEA/gpgomea.so
+cd ../../pythonpkg && python setup.py install --force
+
+# 6. 验证
+python examples/python/test.py
+```
+
+### Conda (environment.yml)
+To install using [conda](https://www.anaconda.com/) with the provided environment file, run:
 ```
 conda env create -f environment.yml
 conda activate gpgomenv

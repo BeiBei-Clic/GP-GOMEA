@@ -42,7 +42,7 @@ target_include_directories(
 # Construct RCPP Bindings
 find_program(R_EXECUTABLE R)
 if(NOT R_EXECUTABLE)
-  message(FATAL_ERROR "R executable not found in PATH; cannot build R binding.")
+  message(STATUS "R executable not found; skipping R binding.")
 else()
   # R/RCPP flags
   execute_process(COMMAND ${R_EXECUTABLE} CMD config --cppflags
