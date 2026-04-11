@@ -1,0 +1,2 @@
+algorithm,dataset,n_rows,r2,rmse,time_seconds,complexity,expression
+gomea,192_vineyard,52,0.756091,2.134161,10.15,22,(x1*(-0.417271*log(x0*x1 + x0 - 54.312) - 18.596862) - 0.417271*(x0 + x1**(3/2))*(x1 - 38.41 + 1.63951212255354*I))/x1
