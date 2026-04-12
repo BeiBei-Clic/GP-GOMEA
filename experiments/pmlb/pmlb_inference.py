@@ -27,6 +27,8 @@ def load_dataset(name, n_rows):
 
 def simplify_expression(expr_str):
     expr_str = expr_str.replace('p/', '/').replace('plog', 'log')
+    if 'aq' in expr_str:
+        return expr_str
     simplified = str(sympy.simplify(expr_str))
     if simplified == '0':
         return expr_str
@@ -49,8 +51,9 @@ ALGORITHM_DEFAULTS = {
     ),
     'sbp': dict(
         gomea=False,
+        functions='+_-_*_aq',
         initmaxtreeheight=6, maxtreeheight=12, popsize=1000, syntuniqinit=1000,
-        subcross=0.0, submut=0.0,
+        subcross=0.0, submut=0.0, unifdepthvar=True,
         sblibtype='p_12_9999_l_n', sbrdo=1.0,
         tournament=4, elitism=1,
         time=-1, generations=500, evaluations=-1,
