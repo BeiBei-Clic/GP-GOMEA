@@ -40,14 +40,14 @@ ALGORITHM_DEFAULTS = {
     'gomea': dict(
         gomea=True, gomfos='LT',
         ims='5_1', initmaxtreeheight=4, syntuniqinit=1000,
-        time=600, generations=-1, evaluations=-1,
+        time=2000, generations=-1, evaluations=-1,
     ),
     'standard': dict(
         gomea=False,
         initmaxtreeheight=6, maxtreeheight=12, popsize=1000, syntuniqinit=1000,
         subcross=0.5, submut=0.5, reproduction=0.0,
         tournament=4, elitism=1,
-        time=-1, generations=500, evaluations=-1,
+        time=2000, generations=500, evaluations=-1,
     ),
     'sbp': dict(
         gomea=False,
@@ -56,7 +56,7 @@ ALGORITHM_DEFAULTS = {
         subcross=0.0, submut=0.0, unifdepthvar=True,
         sblibtype='p_12_9999_l_n', sbrdo=1.0,
         tournament=4, elitism=1,
-        time=-1, generations=500, evaluations=-1,
+        time=2000, generations=500, evaluations=-1,
     ),
 }
 

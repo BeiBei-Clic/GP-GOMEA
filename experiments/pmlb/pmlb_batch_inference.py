@@ -35,11 +35,15 @@ def discover_regression_datasets(datasets_dir):
     return datasets
 
 
-def run_single(dataset, n_rows, seed, algorithm, overrides):
+def run_single(dataset, n_rows, seed, algorithm, overrides, noise_strength=0.0, noise_seed=0):
     """对单个数据集跑推理，返回结果 dict。"""
     X, y = load_dataset(dataset, n_rows)
     n_features = X.shape[1]
     actual_rows = X.shape[0]
+
+    if noise_strength > 0:
+        rng = np.random.RandomState(noise_seed)
+        y = y * (1.0 + noise_strength * rng.randn(len(y)))
 
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=seed
@@ -88,9 +92,14 @@ def main():
     parser.add_argument('--time', type=int, default=None)
     parser.add_argument('--generations', type=int, default=None)
     parser.add_argument('--evaluations', type=int, default=None)
+    parser.add_argument('--noise_strength', type=float, default=0.0,
+                        help='Multiplicative noise strength: y *= (1 + strength * N(0,1))')
+    parser.add_argument('--noise_seed', type=int, default=0,
+                        help='Random seed for noise generation')
     args = parser.parse_args()
 
-    output_csv = os.path.join(os.path.dirname(__file__), 'results', f'pmlb_results_{args.algorithm}.csv')
+    noise_tag = f'_noise{args.noise_strength}' if args.noise_strength > 0 else ''
+    output_csv = os.path.join(os.path.dirname(__file__), 'results', f'pmlb_results_{args.algorithm}{noise_tag}.csv')
 
     overrides = {
         k: v for k, v in [
@@ -116,7 +125,7 @@ def main():
         row = None
         error_msg = ''
         try:
-            row = run_single(dataset, args.max_rows, args.seed, args.algorithm, overrides)
+            row = run_single(dataset, args.max_rows, args.seed, args.algorithm, overrides, args.noise_strength, args.noise_seed + i)
         except Exception as e:
             error_msg = f'{type(e).__name__}: {e}'
             print(f'  ERROR: {error_msg}')
