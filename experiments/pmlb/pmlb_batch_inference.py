@@ -119,6 +119,11 @@ def main():
     os.makedirs(os.path.dirname(output_csv), exist_ok=True)
     write_header = not os.path.exists(output_csv)
 
+    if not write_header:
+        existing = pd.read_csv(output_csv)['dataset'].tolist()
+        datasets = [d for d in datasets if d not in existing]
+        print(f'Skipped {len(existing)} already processed datasets, {len(datasets)} remaining')
+
     total = len(datasets)
     for i, dataset in enumerate(datasets, 1):
         print(f'\n[{i}/{total}] {dataset}')
