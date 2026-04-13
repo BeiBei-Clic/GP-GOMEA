@@ -98,7 +98,7 @@ def main():
                         help='Random seed for noise generation')
     args = parser.parse_args()
 
-    noise_tag = f'_noise{args.noise_strength}' if args.noise_strength > 0 else ''
+    noise_tag = f'_noise{args.noise_strength}'
     output_csv = os.path.join(os.path.dirname(__file__), 'results', f'pmlb_results_{args.algorithm}{noise_tag}.csv')
 
     overrides = {
