@@ -135,3 +135,9 @@ After running `make`, you will find a C++ executable called `main` in `build/rel
 ### Datasets
 For the C++ executable, datasets must be organized as follows. Each row is an example, and each column is a feature, with exception for the last column, which is the target variable. Values should be separated by spaces. Do not include any textual header.
 You can find examples at: https://goo.gl/9D2z3b 
+
+## PMLB 汇总
+汇总 PMLB 结果并输出三组均值/标准差统计：
+```bash
+PYTHONPATH=. .venv/bin/python experiments/pmlb/pmlb_results_summary.py --input_csv experiments/pmlb/results/pmlb_results_sbp_noise0.0.csv --input_csv experiments/pmlb/results/pmlb_results_sbp_noise0.001.csv --input_csv experiments/pmlb/results/pmlb_results_sbp_noise0.01.csv --input_csv experiments/pmlb/results/pmlb_results_sbp_noise0.1.csv --output_csv experiments/pmlb/results/pmlb_results_sbp_all_noise_summary.csv
+```
