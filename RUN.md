@@ -47,3 +47,13 @@ uv run python experiments/pmlb/pmlb_batch_inference.py --algorithm sbp --noise_s
 # 加乘性噪声（y *= (1 + noise_strength * N(0,1))）
 uv run python experiments/pmlb/pmlb_batch_inference.py --algorithm gomea --noise_strength 0.1
 ```
+
+## PMLB Results Summary
+
+按 Feynman、Strogatz、Black-box 三组汇总各算法的 r2 均值/方差、恢复率、复杂度和耗时等指标。
+
+```bash
+uv run python experiments/pmlb/pmlb_results_summary.py \
+  --input_csv experiments/pmlb/results/pmlb_results_sbp_noise0.0.csv experiments/pmlb/results/pmlb_results_sbp_noise0.1.csv experiments/pmlb/results/pmlb_results_sbp_noise0.01.csv experiments/pmlb/results/pmlb_results_sbp_noise0.001.csv \
+  --output_csv experiments/pmlb/results/sbp_summary.csv
+```

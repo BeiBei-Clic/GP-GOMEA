@@ -8,7 +8,7 @@ import pandas as pd
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Summarize PMLB batch inference results by dataset family')
-    parser.add_argument('--input_csv', type=str, action='append', required=True)
+    parser.add_argument('--input_csv', type=str, nargs='+', required=True)
     parser.add_argument('--output_csv', type=str, required=True)
     args = parser.parse_args()
 
