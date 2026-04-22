@@ -54,6 +54,6 @@ uv run python experiments/pmlb/pmlb_batch_inference.py --algorithm gomea --noise
 
 ```bash
 uv run python experiments/pmlb/pmlb_results_summary.py \
-  --input_csv experiments/pmlb/results/pmlb_results_sbp_noise0.0.csv experiments/pmlb/results/pmlb_results_sbp_noise0.1.csv experiments/pmlb/results/pmlb_results_sbp_noise0.01.csv experiments/pmlb/results/pmlb_results_sbp_noise0.001.csv \
-  --output_csv experiments/pmlb/results/sbp_summary.csv
+  --input_csv experiments/pmlb/results/pmlb_results_gomea_noise0.0.csv experiments/pmlb/results/pmlb_results_gomea_noise0.1.csv experiments/pmlb/results/pmlb_results_gomea_noise0.01.csv experiments/pmlb/results/pmlb_results_gomea_noise0.001.csv \
+  --output_csv experiments/pmlb/results/GP-GOMEA_summary.csv
 ```
